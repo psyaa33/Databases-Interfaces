@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    const supabase = createClient('https://ybyvrmdoijbktperwcah.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlieXZybWRvaWpia3RwZXJ3Y2FoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTU2MjE2MDAsImV4cCI6MjAzMTE5NzYwMH0.Pd4JI906RsaOXS_y5HkxBf6oY53ZE5RflPnsKjV__YM');
+    async function addVehicle() {
+
+        const VehicleID = document.getElementById('rego').value.toUpperCase(); // Get the input value and convert to uppercase
+        
+        const make = document.getElementById('make').value;
+        
+        const model = document.getElementById('model').value;
+        
+        const colour = document.getElementById('colour').value;
+        
+        const ownerID = document.getElementById('owner').value;
+        
+        
+        // Add the new vehicle
+        
+        const { data, error } = await supabase
+        
+        .from('Vehicles')
+        
+        .insert([{ VehicleID: VehicleID, Make: make, Model: model, Colour: colour, OwnerID: ownerID }]);
+        
+        
+        if (error) {
+        
+        console.error('Error adding new vehicle:', error.message);
+        
+        return;
+        
+        }
+        
+        
+        // Display success message
+        
+        const messageDiv = document.getElementById('message');
+        
+        messageDiv.innerHTML = '<p>Vehicle added successfully</p>';
+        
+        }
+        
+        
+        // Add event listener to submit button
+        
+        document.querySelector('input[type="button"]').addEventListener('click', addVehicle);
+        
+        </script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.14.0/+esm"></script>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1>Add Vehicle</h1>
+            <ul class="links">
+                <li><a href="people_search.html">People search</a></li>
+                <li><a href="vehicle_search.html">Vehicle search</a></li>
+                <li><a href="add_vehicle.html">Add a vehicle</a></li>
+            </ul>
+        </header>
+        <aside>
+            <img src="images/vehicle2.jpg" alt="car">
+
+        </aside>
+        <main>
+            <form>
+             
+            <div class="info">
+                <label>Vehicle REgistration/Plate Number:</label>
+                <input id="rego" type="text">
+            </div>
+            <div class="info license">
+                <label>Vehicle Make:</label>
+                <input id="make" type="text">
+            </div>
+            <div class="info license">
+                <label>Vehicle Model:</label>
+                <input id="model" type="text">
+            </div>
+            <div class="info license">
+                <label>Vehicle Colour:</label>
+                <input id="colour" type="text">
+            </div>
+            <div class="info license">
+                <label>Vehicle Owner:</label>
+                <input id="owner" type="text">
+            </div>
+            
+            
+            <input type="button" value="Add">
+               
+        </form>
+            <div class="search_message" id="message">
+                <p>Vehicle added successfully</p>
+            </div>
+        </main>
+        <footer>
+            <p></p>
+        </footer>
+    </div>
+    
+</body>
+</html>
